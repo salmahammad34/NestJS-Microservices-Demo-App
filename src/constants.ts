@@ -1,0 +1,3 @@
+// export const MICROSERVICES= {
+//     PRODUCT_REDIS_CLIENT="PRODUCT_REDIS_CLIENT",
+// }

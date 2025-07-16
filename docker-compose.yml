@@ -1,0 +1,55 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: npm run start:dev 
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - pg
+      - redis
+    environment:
+      DATABASE_URL: postgres://postgres:get@get1@pg:5432/postgres
+      REDIS_URL: redis://redis:6379
+    # this will be when i build or run in this 
+    profiles:    
+      - local-env
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    # folder inside the docker to save the data
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    profiles:
+      - local-env
+  pg:
+    image: "postgres:latest"
+    # this is for connect to DB
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "get@get1"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    profiles:
+      - local-env
+      # store data locally
+volumes:
+  redis-data:
+  postgres-data:
