@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: npm run start:dev 
+    command: sh -c "npx prisma generate && npm run start:dev"
     volumes:
       - .:/app
       - /app/node_modules
@@ -15,14 +15,13 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:get@get1@pg:5432/postgres
       REDIS_URL: redis://redis:6379
-    # this will be when i build or run in this 
     profiles:    
       - local-env
+
   redis:
     image: "redis:latest"
     ports:
       - "6379:6379"
-    # folder inside the docker to save the data
     volumes:
       - redis-data:/data
     healthcheck:
@@ -32,9 +31,9 @@ services:
       retries: 5
     profiles:
       - local-env
+
   pg:
     image: "postgres:latest"
-    # this is for connect to DB
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "get@get1"
@@ -49,7 +48,7 @@ services:
       retries: 5
     profiles:
       - local-env
-      # store data locally
+
 volumes:
   redis-data:
   postgres-data:

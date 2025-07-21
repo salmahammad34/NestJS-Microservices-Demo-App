@@ -1,25 +1,25 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
+ 
+  const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe());
 
-  // const TCPMicroservices = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
-  //   transport: Transport.TCP,
-  //   options: {
-  //     host: 'localhost',
-  //     port: 3001,
-  //   }
-  // })
-  const RedisMicroservices = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
+
+  app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.REDIS,
     options: {
-      host: 'redis',
-      port: 6379,
+     host:'redis',
+     port:Number(process.env.PORT)
     },
   });
 
-  await Promise.all([ RedisMicroservices.listen()])
+  
+  await app.startAllMicroservices();
+  await app.listen(3000);  
 }
 
 bootstrap();

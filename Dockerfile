@@ -8,5 +8,7 @@ RUN npm install
 COPY . .
 
 RUN npm run build
+# Generate Prisma Client with Linux binaries
+RUN npx prisma generate
 
 CMD ["npm", "run", "start:dev"]
