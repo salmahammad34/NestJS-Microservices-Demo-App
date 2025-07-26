@@ -26,4 +26,10 @@ export class ProductService {
   async delete(id: number) {
     return this.productRepo.delete(id);
   }
+
+  // Example function to update stock based on order
+  async updateStock(productId: number) {
+    console.log(`the product ${productId} is updated  successfully `);
+   
+  }
 }

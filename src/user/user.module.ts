@@ -3,11 +3,12 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { UserRepository } from './user.repository';
 import { PrismaService } from 'prisma/prisma.service';
+import { AuthModule } from 'src/common/AuthGuards/auth.module';
 
 
 
 @Module({
-  imports:[],
+  imports:[AuthModule],
   controllers: [UserController],
   providers: [UserService, UserRepository,PrismaService],
   exports:[UserRepository]
