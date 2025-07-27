@@ -27,7 +27,7 @@ export class ProductService {
     return this.productRepo.delete(id);
   }
 
-  // Example function to update stock based on order
+  //update stock(fake implementation)
   async updateStock(productId: number) {
     console.log(`the product ${productId} is updated  successfully `);
    
