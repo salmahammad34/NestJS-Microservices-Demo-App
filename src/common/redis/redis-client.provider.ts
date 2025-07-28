@@ -1,14 +1,14 @@
-import { ClientProxyFactory, Transport, RedisOptions } from '@nestjs/microservices';
-import {REDIS_CLIENT} from 'src/common/constants'
+import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 
 export const RedisClientProvider = {
-  provide: REDIS_CLIENT,
+  provide: 'REDIS_CLIENT',
   useFactory: () => {
     return ClientProxyFactory.create({
       transport: Transport.REDIS,
       options: {
-        url: process.env.REDIS_URL,
+        host: process.env.REDIS_HOST || 'redis',
+        port: Number(process.env.REDIS_PORT) || 6379,
       },
-    } as RedisOptions); 
+    });
   },
 };
