@@ -6,8 +6,8 @@ export const RedisClientProvider = {
     return ClientProxyFactory.create({
       transport: Transport.REDIS,
       options: {
-        host: process.env.REDIS_HOST || 'redis',
-        port: Number(process.env.REDIS_PORT) || 6379,
+        host: process.env.REDIS_HOST,
+        port: Number(process.env.REDIS_PORT),
       },
     });
   },

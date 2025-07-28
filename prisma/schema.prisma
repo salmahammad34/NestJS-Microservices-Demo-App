@@ -9,7 +9,7 @@ datasource db {
 }
 
 
-model Product {
+model Product { 
   id          Int      @id @default(autoincrement())
   name        String
   price       Float
@@ -25,7 +25,7 @@ model Product {
   status      String   @default("pending")
   createdAt   DateTime @default(now())
   user        User     @relation(fields: [userId], references: [id])
-  product     Product  @relation(fields: [productId], references: [id])
+  product     Product  @relation(fields: [productId], references: [id])  
 }
 
 model User {
