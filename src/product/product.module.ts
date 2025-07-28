@@ -4,14 +4,13 @@ import { ProductService } from './product.service';
 import { productRepository } from './product.repository'
 import { RedisModule } from '../common/redis/redis.module'
 import { AuthModule } from 'src/common/AuthGuards/auth.module';
+import {ProductEventsListener} from './ProductEventsListener.controller'
 
-import { RedisSubscriberService } from 'src/common/redis/redis.subscriber';
-import { ProductEventsListener } from './product-events.listener';
 
 
 @Module({
   imports: [RedisModule,AuthModule],
-  controllers: [ProductController],
-  providers: [ProductService, productRepository,RedisSubscriberService,ProductEventsListener],
+  controllers: [ProductController,ProductEventsListener],
+  providers: [ProductService, productRepository],
 })
 export class ProductModule { }

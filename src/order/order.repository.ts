@@ -8,11 +8,12 @@ export class orderRepository {
 
     async upsert(id:number,createData:CreateOrderDto,updateData:updateOrderDto){
         return await this.prisma.order.upsert({
-                where: { id: Number(id) },
+                where: {id:id},
                 create: createData,
                 update: updateData,
               })
     }
+    
     async create(data: CreateOrderDto) {
         return await this.prisma.order.create({ data })
     }

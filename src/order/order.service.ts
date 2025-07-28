@@ -3,18 +3,17 @@ import { orderRepository } from './order.repository';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { updateOrderDto } from './dtos/update-order.dto';
 import { RedisPublisherService } from 'src/common/redis/redis.publisher';
-import {PublishEventDto} from 'src/common/redis/publish-event.dto'
+import {PublishEventDto} from 'src/common/redis/publish-event.dto';
+import {ORDER_CREATED_EVENT} from 'src/common/constants'
 
 
 @Injectable()
 export class OrderService {
-  
 
     constructor(private readonly orderRepository: orderRepository,
          private readonly redisPublisher:RedisPublisherService) {
        
     }
-
 
     async findAll(userId: string) {
         return this.orderRepository.findAllByUserId(userId);
@@ -35,14 +34,14 @@ export class OrderService {
     }
 
     async delete(id: string) {
-        // Check existence before delete
+       
         await this.findById(Number(id));
         return this.orderRepository.delete(Number(id));
     }
 
-    async save(id: number, createData: CreateOrderDto, updateData: updateOrderDto){
-        const order = await this.orderRepository.upsert(id, createData, updateData);
-        const event=new PublishEventDto('order_created', order, order.id);
+    async save(Id:number,createdOrder: CreateOrderDto,updatedOrder:updateOrderDto){
+        const order = await this.orderRepository.upsert(Id,createdOrder,updatedOrder);
+        const event=new PublishEventDto(ORDER_CREATED_EVENT, order, order.id);
         await this.redisPublisher.publish(event);
         console.log('Published order_created',order);
         return { message: 'order_created', order };

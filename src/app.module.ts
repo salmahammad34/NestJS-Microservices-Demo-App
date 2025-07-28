@@ -14,9 +14,6 @@ import { orderRepository } from './order/order.repository';
 import { AuthModule } from './common/AuthGuards/auth.module';
 import { RedisPublisherService } from './common/redis/redis.publisher';
 
-
-
-
 @Module({
   imports: [
     ConfigModule.forRoot(),

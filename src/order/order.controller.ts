@@ -24,11 +24,11 @@ export class OrderController {
    * Upsert ---->>> Update if exists, else create
    */
   @Put(':id')
-  async saveOrder(
+  async creatOrUpdateOrder(
     @Param('id') id: string,
     @Body() data: CreateOrderDto | updateOrderDto
   ) {
-    return await this.orderService.save(Number(id), data as CreateOrderDto, data as updateOrderDto);
+    return await this.orderService.save(Number(id),data as CreateOrderDto, data as updateOrderDto);
   }
 
   @Delete(':id')

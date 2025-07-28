@@ -1,22 +1,10 @@
-
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import{RedisPublisherService} from './redis.publisher'
-
+import {RedisClientProvider}  from  './redis-client.provider'
 
 @Module({
-  imports: [
-    ClientsModule.register([
-      {
-        name: 'REDIS_SERVICE',
-        transport: Transport.REDIS,
-        options: {
-          host: 'redis',   
-          port: 6379,
-        },
-      },
-    ]),
-  ],providers:[RedisPublisherService],
-  exports: [ClientsModule],
+  providers: [RedisPublisherService, RedisClientProvider],
+  exports: [RedisPublisherService,RedisClientProvider], 
 })
 export class RedisModule {}
+

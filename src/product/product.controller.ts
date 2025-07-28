@@ -1,19 +1,13 @@
-import { Controller, Get, Post, Body, Param, Patch, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Body, Param, Patch, Delete, UseGuards ,Post} from '@nestjs/common';
 import { ProductService } from './product.service';
-import { CreateProductDto } from './dtos/create-product.dto';
 import { UpdateProductDto } from './dtos/update-product';
 import { AuthGuard } from 'src/common/AuthGuards/auth.guard';
-
+import {EventPattern, Payload} from "@nestjs/microservices"
 @Controller('products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @UseGuards(AuthGuard)
-  @Post()
-  async create(@Body() data: CreateProductDto) {
-    return this.productService.create(data);
-  }
-
   @Get()
   async findAll() {
     return this.productService.findAll();
