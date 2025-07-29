@@ -2,7 +2,6 @@ import { Controller, Get, Body, Param, Patch, Delete, UseGuards ,Post} from '@ne
 import { ProductService } from './product.service';
 import { UpdateProductDto } from './dtos/update-product';
 import { AuthGuard } from 'src/common/AuthGuards/auth.guard';
-import {EventPattern, Payload} from "@nestjs/microservices"
 @Controller('products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
@@ -12,7 +11,7 @@ export class ProductController {
   async findAll() {
     return this.productService.findAll();
   }
-
+  
   @Get(':id')
   async findById(@Param('id') id: string) {
     return this.productService.findById(Number(id));
